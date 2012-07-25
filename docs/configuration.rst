@@ -739,6 +739,17 @@ where specified.
 
   *Introduced*: 3.0a11
 
+``restartsignal``
+
+  The signal used to restart the program when a restart is requested.  This
+  can be any of TERM, HUP, INT, QUIT, KILL, USR1, or USR2.
+
+  *Default*: HUP
+
+  *Required*:  No.
+
+  *Introduced*: 3.?
+
 ``user``
 
   If :program:`supervisord` runs as root, this UNIX user account will
