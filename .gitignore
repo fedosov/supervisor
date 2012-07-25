@@ -4,6 +4,10 @@
 *.pyc
 *.pyo
 *.swp
+.idea
+bin/
+lib/
+include/
 .DS_Store
 .coverage
 build/
