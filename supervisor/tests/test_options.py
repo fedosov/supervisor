@@ -303,7 +303,7 @@ class ServerOptionsTests(unittest.TestCase):
         self.assertEqual(proc2.uid, None)
         self.assertEqual(proc2.stdout_logfile, '/tmp/cat2.log')
         self.assertEqual(proc2.stopsignal, signal.SIGTERM)
-        self.assertEqual(proc2.restartsignal, signal.SIGHUP)
+        self.assertEqual(proc2.restartsignal, None)
         self.assertEqual(proc2.stopasgroup, False)
         self.assertEqual(proc2.killasgroup, False)
         self.assertEqual(proc2.stdout_logfile_maxbytes, 1024)
@@ -329,7 +329,7 @@ class ServerOptionsTests(unittest.TestCase):
         self.assertEqual(proc3.stdout_logfile_backups, 10)
         self.assertEqual(proc3.exitcodes, [0,1,127])
         self.assertEqual(proc3.stopsignal, signal.SIGTERM)
-        self.assertEqual(proc3.restartsignal, signal.SIGHUP)
+        self.assertEqual(proc3.restartsignal, None)
         self.assertEqual(proc3.stopasgroup, True)
         self.assertEqual(proc3.killasgroup, True)
 
@@ -352,7 +352,7 @@ class ServerOptionsTests(unittest.TestCase):
         self.assertEqual(proc4_a.stdout_logfile_backups, 10)
         self.assertEqual(proc4_a.exitcodes, [0,2])
         self.assertEqual(proc4_a.stopsignal, signal.SIGTERM)
-        self.assertEqual(proc4_a.restartsignal, signal.SIGHUP)
+        self.assertEqual(proc4_a.restartsignal, None)
         self.assertEqual(proc4_a.stopasgroup, False)
         self.assertEqual(proc4_a.killasgroup, False)
 
@@ -370,7 +370,7 @@ class ServerOptionsTests(unittest.TestCase):
         self.assertEqual(proc4_b.stdout_logfile_backups, 10)
         self.assertEqual(proc4_b.exitcodes, [0,2])
         self.assertEqual(proc4_b.stopsignal, signal.SIGTERM)
-        self.assertEqual(proc4_b.restartsignal, signal.SIGHUP)
+        self.assertEqual(proc4_b.restartsignal, None)
         self.assertEqual(proc4_b.stopasgroup, False)
         self.assertEqual(proc4_b.killasgroup, False)
 

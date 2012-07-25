@@ -690,7 +690,7 @@ where specified.
 
 ``stopsignal``
 
-  The signal used to kill the program when a stop is requested.  This
+  The signal used to kill the program when a stop is requested. This
   can be any of TERM, HUP, INT, QUIT, KILL, USR1, or USR2.
 
   *Default*: TERM
@@ -741,10 +741,11 @@ where specified.
 
 ``restartsignal``
 
-  The signal used to restart the program when a restart is requested.  This
-  can be any of TERM, HUP, INT, QUIT, KILL, USR1, or USR2.
+  The signal used to restart the program when a restart is requested
+  (or perform stop/start sequence if set to None).
+  This can be any of TERM, HUP, INT, QUIT, KILL, USR1, USR2 or None.
 
-  *Default*: HUP
+  *Default*: None
 
   *Required*:  No.
 

@@ -398,6 +398,8 @@ def url(value):
 def signal_number(value):
     import signal
     result = None
+    if value is None:
+        return result
     try:
         result = int(value)
     except (ValueError, TypeError):
