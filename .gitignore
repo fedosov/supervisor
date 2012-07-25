@@ -5,9 +5,9 @@
 *.pyo
 *.swp
 .idea
-bin/
-lib/
-include/
+supervisor/bin/
+supervisor/lib/
+supervisor/include/
 .DS_Store
 .coverage
 build/
