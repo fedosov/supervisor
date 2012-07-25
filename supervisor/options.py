@@ -761,6 +761,7 @@ class ServerOptions(Options):
         startretries = integer(get(section, 'startretries', 3))
         uid = name_to_uid(get(section, 'user', None))
         stopsignal = signal_number(get(section, 'stopsignal', 'TERM'))
+        restartsignal = signal_number(get(section, 'restartsignal', 'HUP'))
         stopwaitsecs = integer(get(section, 'stopwaitsecs', 10))
         stopasgroup = boolean(get(section, 'stopasgroup', 'false'))
         killasgroup = boolean(get(section, 'killasgroup', stopasgroup))
@@ -861,6 +862,7 @@ class ServerOptions(Options):
                 stderr_logfile_backups=logfiles['stderr_logfile_backups'],
                 stderr_logfile_maxbytes=logfiles['stderr_logfile_maxbytes'],
                 stopsignal=stopsignal,
+                restartsignal=restartsignal,
                 stopwaitsecs=stopwaitsecs,
                 stopasgroup=stopasgroup,
                 killasgroup=killasgroup,
@@ -1583,7 +1585,7 @@ class ProcessConfig(Config):
         'stderr_logfile', 'stderr_capture_maxbytes',
         'stderr_logfile_backups', 'stderr_logfile_maxbytes',
         'stderr_events_enabled',
-        'stopsignal', 'stopwaitsecs', 'stopasgroup', 'killasgroup',
+        'stopsignal', 'restartsignal', 'stopwaitsecs', 'stopasgroup', 'killasgroup',
         'exitcodes', 'redirect_stderr' ]
     optional_param_names = [ 'environment', 'serverurl' ]
 
