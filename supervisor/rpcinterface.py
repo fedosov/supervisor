@@ -441,6 +441,46 @@ class SupervisorNamespaceRPCInterface:
         killall.rpcinterface = self
         return killall # deferred
 
+    def restartProcess(self, name, sig, wait=True):
+        """ Restart process with signal
+
+        @param string name      The name of the process to stop
+        @param int sig          Signal to send with kill command
+        @param boolean wait     Wait for the process to be fully restarted
+        @return boolean result  Always return true unless error.
+        """
+
+        group, process = self._getGroupAndProcess(name)
+
+        restarted = []
+        called  = []
+
+        def restartit():
+            if not called:
+                if process.get_state() not in RUNNING_STATES:
+                    raise RPCError(Faults.NOT_RUNNING)
+                called.append(1)
+
+            if not restarted:
+                msg = process.restart(sig)
+                if msg is not None:
+                    raise RPCError(Faults.FAILED, msg)
+                restarted.append(1)
+
+                if wait:
+                    return NOT_DONE_YET
+                else:
+                    return True
+
+            if process.get_state() not in (ProcessStates.RUNNING,):
+                return NOT_DONE_YET
+            else:
+                return True
+
+        restartit.delay = 0.2
+        restartit.rpcinterface = self
+        return restartit
+
     def getAllConfigInfo(self):
         """ Get info about all availible process configurations. Each record
         represents a single process (i.e. groups get flattened).

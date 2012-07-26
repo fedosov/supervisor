@@ -27,6 +27,10 @@ from supervisor.xmlrpc import RPCError
 
 from supervisor.rpcinterface import SupervisorNamespaceRPCInterface
 
+import signal
+# Signal string names dictionary: http://stackoverflow.com/questions/2549939/get-signal-names-from-numbers-in-python
+signal_names = dict((k, v) for v, k in signal.__dict__.iteritems() if v.startswith('SIG') and not v.startswith('SIG_'))
+
 class DeferredWebProducer:
     """ A medusa producer that implements a deferred callback; requires
     a subclass of asynchat.async_chat that handles NOT_DONE_YET sentinel """
@@ -328,20 +332,31 @@ class StatusView(MeldView):
                     return stopprocess
 
                 elif action == 'restart':
-                    callback = rpcinterface.system.multicall(
-                        [ {'methodName':'supervisor.stopProcess',
-                           'params': [namespec]},
-                          {'methodName':'supervisor.startProcess',
-                           'params': [namespec]},
-                          ]
-                        )
-                    def restartprocess():
-                        result = callback()
-                        if result is NOT_DONE_YET:
-                            return NOT_DONE_YET
-                        return 'Process %s restarted' % namespec
-                    restartprocess.delay = 0.05
-                    return restartprocess
+                    # restart with `restartsignal` if it is set in options
+                    if not process.config.restartsignal is None:
+                        callback = rpcinterface.supervisor.restartProcess(namespec, process.config.restartsignal)
+                        def restartprocess():
+                            result = callback()
+                            if result is NOT_DONE_YET:
+                                return NOT_DONE_YET
+                            return 'Process %s restarted with %s signal' % (namespec, signal_names[process.config.restartsignal])
+                        restartprocess.delay = 0.05
+                        return restartprocess
+                    else:
+                        callback = rpcinterface.system.multicall(
+                            [ {'methodName':'supervisor.stopProcess',
+                               'params': [namespec]},
+                              {'methodName':'supervisor.startProcess',
+                               'params': [namespec]},
+                              ]
+                            )
+                        def restartprocess():
+                            result = callback()
+                            if result is NOT_DONE_YET:
+                                return NOT_DONE_YET
+                            return 'Process %s restarted' % namespec
+                        restartprocess.delay = 0.05
+                        return restartprocess
 
                 elif action == 'start':
                     try:

@@ -330,6 +330,19 @@ class Subprocess:
         self.administrative_stop = 1
         return self.kill(self.config.stopsignal)
 
+    def restart(self, sig):
+        """ Restart with signal """
+        # DIRTY killing process, need to rewrite completely (according to kill method)
+        options = self.config.options
+        if not self.pid:
+            msg = ("attempted to kill %s with sig %s but it wasn't running" %
+                   (self.config.name, signame(sig)))
+            options.logger.debug(msg)
+            return msg
+        pid = self.pid
+        options.kill(pid, sig)
+        return None
+
     def give_up(self):
         self.delay = 0
         self.backoff = 0
