@@ -333,8 +333,8 @@ class StatusView(MeldView):
 
                 elif action == 'restart':
                     # restart with `restartsignal` if it is set in options
-                    if not process.config.restartsignal is None:
-                        callback = rpcinterface.supervisor.restartProcess(namespec, process.config.restartsignal)
+                    if process.config.restartsignal > -1:
+                        callback = rpcinterface.supervisor.restartProcess(namespec)
                         def restartprocess():
                             result = callback()
                             if result is NOT_DONE_YET:

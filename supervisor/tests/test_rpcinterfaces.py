@@ -955,6 +955,7 @@ class SupervisorNamespaceXMLRPCInterfaceTests(TestBase):
         self.assertEqual(data['stdout_logfile'], '/tmp/fleeb.bar')
         self.assertEqual(data['stderr_logfile'], '')
         self.assertEqual(data['name'], 'foo')
+        self.assertEqual(data['restartsignal'], -1)
         self.assertEqual(data['pid'], 111)
         self.assertEqual(data['start'], 10)
         self.assertEqual(data['stop'], 11)

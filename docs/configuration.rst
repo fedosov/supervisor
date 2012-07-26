@@ -742,10 +742,10 @@ where specified.
 ``restartsignal``
 
   The signal used to restart the program when a restart is requested
-  (or perform stop/start sequence if set to None).
+  (or perform stop/start sequence if set to -1).
   This can be any of TERM, HUP, INT, QUIT, KILL, USR1, USR2 or None.
 
-  *Default*: None
+  *Default*: -1
 
   *Required*:  No.
 

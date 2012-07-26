@@ -761,7 +761,7 @@ class ServerOptions(Options):
         startretries = integer(get(section, 'startretries', 3))
         uid = name_to_uid(get(section, 'user', None))
         stopsignal = signal_number(get(section, 'stopsignal', 'TERM'))
-        restartsignal = signal_number(get(section, 'restartsignal', None))
+        restartsignal = signal_number(get(section, 'restartsignal', -1))
         stopwaitsecs = integer(get(section, 'stopwaitsecs', 10))
         stopasgroup = boolean(get(section, 'stopasgroup', 'false'))
         killasgroup = boolean(get(section, 'killasgroup', stopasgroup))

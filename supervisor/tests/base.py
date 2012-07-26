@@ -483,7 +483,7 @@ class DummyPConfig:
                  stderr_events_enabled=False,
                  stderr_logfile_backups=0, stderr_logfile_maxbytes=0,
                  redirect_stderr=False,
-                 stopsignal=None, stopwaitsecs=10, stopasgroup=False, killasgroup=False,
+                 stopsignal=None, restartsignal=-1, stopwaitsecs=10, stopasgroup=False, killasgroup=False,
                  exitcodes=(0,2), environment=None, serverurl=None):
         self.options = options
         self.name = name
@@ -509,6 +509,7 @@ class DummyPConfig:
             import signal
             stopsignal = signal.SIGTERM
         self.stopsignal = stopsignal
+        self.restartsignal = restartsignal
         self.stopwaitsecs = stopwaitsecs
         self.stopasgroup = stopasgroup
         self.killasgroup = killasgroup
@@ -664,6 +665,7 @@ class DummySupervisorRPCNamespace:
         'name':'foo',
         'group':'foo',
         'pid':11,
+        'restartsignal':-1,
         'state':ProcessStates.RUNNING,
         'statename':'RUNNING',
         'start':_NOW - 100,
@@ -676,6 +678,7 @@ class DummySupervisorRPCNamespace:
         'name':'bar',
         'group':'bar',
         'pid':12,
+        'restartsignal':-1,
         'state':ProcessStates.FATAL,
         'statename':'FATAL',
         'start':_NOW - 100,
@@ -688,6 +691,7 @@ class DummySupervisorRPCNamespace:
         'name':'baz_01',
         'group':'baz',
         'pid':13,
+        'restartsignal':-1,
         'state':ProcessStates.STOPPED,
         'statename':'STOPPED',
         'start':_NOW - 100,

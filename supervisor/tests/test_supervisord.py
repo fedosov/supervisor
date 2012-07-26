@@ -258,7 +258,7 @@ class SupervisordTests(unittest.TestCase):
                 'stderr_events_enabled': False,
                 'stderr_logfile_backups': 0, 'stderr_logfile_maxbytes': 0,
                 'redirect_stderr': False,
-                'stopsignal': None, 'restartsignal': None, 'stopwaitsecs': 10,
+                'stopsignal': None, 'restartsignal': -1, 'stopwaitsecs': 10,
                 'stopasgroup': False,
                 'killasgroup': False,
                 'exitcodes': (0,2), 'environment': None, 'serverurl': None }

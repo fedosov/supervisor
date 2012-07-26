@@ -755,8 +755,18 @@ class DefaultControllerPlugin(ControllerPluginBase):
             self.help_restart()
             return
 
-        self.do_stop(arg)
-        self.do_start(arg)
+        name = names[0]
+
+        supervisor = self.ctl.get_supervisor()
+        config = supervisor.getProcessInfo(name)
+        # TODO: group restart with signal, test if restart not failed
+        # Check if a process requires a special signal to restart or just stop/start sequence
+        if config and config['restartsignal'] > -1:
+            result = supervisor.restartProcess(name)
+            self.ctl.output('%s: restarted' % name)
+        else:
+            self.do_stop(arg)
+            self.do_start(arg)
 
     def help_restart(self):
         self.ctl.output("restart <name>\t\tRestart a process")

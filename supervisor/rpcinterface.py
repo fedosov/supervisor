@@ -441,16 +441,18 @@ class SupervisorNamespaceRPCInterface:
         killall.rpcinterface = self
         return killall # deferred
 
-    def restartProcess(self, name, sig, wait=True):
+    def restartProcess(self, name, wait=True):
         """ Restart process with signal
 
         @param string name      The name of the process to stop
-        @param int sig          Signal to send with kill command
         @param boolean wait     Wait for the process to be fully restarted
         @return boolean result  Always return true unless error.
         """
 
+        self._update('restartProcess')
+
         group, process = self._getGroupAndProcess(name)
+        sig = process.config.restartsignal
 
         restarted = []
         called  = []
@@ -566,6 +568,7 @@ class SupervisorNamespaceRPCInterface:
             'logfile':stdout_logfile, # b/c alias
             'stdout_logfile':stdout_logfile,
             'stderr_logfile':stderr_logfile,
+            'restartsignal': process.config.restartsignal,
             'pid':process.pid,
             }
         
